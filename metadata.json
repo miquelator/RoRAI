@@ -1,0 +1,8 @@
+{
+    "name": "RoRAI",
+    "description": "Assumes direct control of the player character if this mod's artifact is activated.",
+    "internalname": "RoRAI",
+    "version": "0.0.1",
+    "author": "Acenm5",
+	"mpcompat": false,
+}
