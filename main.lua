@@ -27,9 +27,7 @@ registercallback("onStageEntry", function()
 	local heroCoord = hero:findNearest(16,16)
 	local heroX = heroCoord.x
 	local heroY = heroCoord.y
-	print(heroX)
-	print(heroY)
-	
+		
 	--Find the instance of the teleporter based off player coordinates
 	local teleporter = Object.find("Teleporter", "vanilla")
 	local teleLocation = teleporter:findNearest(heroX,heroY)
@@ -39,6 +37,8 @@ registercallback("onStageEntry", function()
 	-- Just checking to see if it all worked
 	print(teleX)
 	print(teleY)
+	print(heroX)
+	print(heroY)
 end)
 
 
