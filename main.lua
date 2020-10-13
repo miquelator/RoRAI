@@ -16,10 +16,30 @@ registercallback("onPlayerStep", function(player)
 	if artifact.active then
 		-- All necessary code should begin below this comment line
 		player:set("moveRight", 1)
+		print(player:getSurvivor().displayName)
 	end
 end)
 
-
+-- Find the teleporter on stage start-up
+registercallback("onStageEntry", function()
+	-- Find the instance of the player and saving their x,y coordinates
+	local hero = Object.find("P", "vanilla")
+	local heroCoord = hero:findNearest(16,16)
+	local heroX = heroCoord.x
+	local heroY = heroCoord.y
+	print(heroX)
+	print(heroY)
+	
+	--Find the instance of the teleporter based off player coordinates
+	local teleporter = Object.find("Teleporter", "vanilla")
+	local teleLocation = teleporter:findNearest(heroX,heroY)
+	local teleX = teleLocation.x
+	local teleY = teleLocation.y
+	
+	-- Just checking to see if it all worked
+	print(teleX)
+	print(teleY)
+end)
 
 
 --[[ below is sample code from the example mod
