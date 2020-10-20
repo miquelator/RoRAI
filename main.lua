@@ -10,12 +10,43 @@ artifact.unlocked = true
 artifact.loadoutSprite = Sprite.load("RoRAI_artifact.png", 2, 18, 18)
 artifact.loadoutText = "Controls the player so you don't have to!"
 
+local lMove = 1
+local rMove = 0
 
 -- Anything under the onPlayerStep callback will be run on every frame
 registercallback("onPlayerStep", function(player)
+	local upMove = 0
+	--local maxJump = player:get("pVmax")
+	--print("height", maxJump) -- it's 3
+
+	-- left decreases x, down increase y 
+	print("player.x, player.y", player.x , player.y)
 	if artifact.active then
 		-- All necessary code should begin below this comment line
-		player:set("moveRight", 1)
+		-- Move right until you hit a wall, then turn around--
+		if rMove == 1 and Stage.collidesRectangle(player.x + 2, player.y - 4, player.x+7, player.y + 4 ) then
+			rMove = 0
+			lMove = 1
+			print("moving right & hit rectangle:", player.x + 2, player.y - 4, player.x+7, player.y + 4)
+		-- Move left until you hit a wall, then turn around--
+		elseif lMove == 1 and Stage.collidesRectangle(player.x - 7, player.y - 4, player.x-2, player.y + 4) then
+			lMove = 0
+			rMove = 1
+			print("moving left & hit rectangle:", player.x - 7, player.y - 4, player.x-2, player.y + 4)
+		else
+			print("conditional:", Stage.collidesRectangle(player.x + 2, player.y - 4 + 1, player.x+7, player.y + 4) == not Stage.collidesRectangle(player.x - 7, player.y - 4 + 1 , player.x-2, player.y + 4))
+			if Stage.collidesRectangle(player.x + 2, player.y - 4 + 1, player.x+7, player.y + 4) == not Stage.collidesRectangle(player.x - 7, player.y - 4 + 1 , player.x-2, player.y + 4) then
+				upMove = 1
+				print("jumping")
+			end
+		end
+		player:set("moveLeft", lMove)
+		player:set("moveRight", rMove)
+		--player:set("moveUp", upMove)
+		print("Moves:", lMove, " ", rMove, " ", upMove)
+		print(player:getSurvivor().displayName)
+
+		print(player:getSurvivor().displayName)
 	end
 end)
 
