@@ -42,11 +42,11 @@ registercallback("onPlayerStep", function(player)
 		end
 
 		--Jumps when there is an obstacle not too high to jump
-		if (player:collidesMap(player.x+20, player.y )) and( not player:collidesMap(player.x+17, player.y-20 ) )and ( rMove == 1 )then
+		if (player:collidesMap(player.x+20, player.y )) and( not player:collidesMap(player.x+17, player.y-40 ) )and ( rMove == 1 )then
 		upMove = 1
 		end
 
-		if (player:collidesMap(player.x-20, player.y )) and (not player:collidesMap(player.x-17, player.y-20 )) and (lMove == 1 )then
+		if (player:collidesMap(player.x-20, player.y )) and (not player:collidesMap(player.x-17, player.y-40 )) and (lMove == 1 )then
 		upMove = 1
 		end
 
