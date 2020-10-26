@@ -19,31 +19,35 @@ registercallback("onPlayerStep", function(player)
 	local upMove = 0
 	local maxJump = player:get("pVmax")*8
 	--print("height", maxJump) -- it's 3
-
-	-- left decreases x, down increase y 
-	print("player.x, player.y", player.x , player.y)
+		local stage = Stage.progression[2][1]
+		print(stage)
+	-- left decreases x, down increase y
+	--print("player.x, player.y", player.x , player.y)
 	if artifact.active then
 		-- All necessary code should begin below this comment line
 		-- Move right until you hit a wall, then turn around--
 		if rMove == 1 and Stage.collidesRectangle(player.x + 2, player.y - 4, player.x+7, player.y + 4 ) then
 			rMove = 0
 			lMove = 1
-			print("moving right & hit rectangle:", player.x + 2, player.y - 4, player.x+7, player.y + 4)
+			upMove = 1
+
+			--print("moving right & hit rectangle:", player.x + 2, player.y - 4, player.x+7, player.y + 4)
 		-- Move left until you hit a wall, then turn around--
 		elseif lMove == 1 and Stage.collidesRectangle(player.x - 7, player.y - 4, player.x-2, player.y + 4) then
 			lMove = 0
 			rMove = 1
-			print("moving left & hit rectangle:", player.x - 7, player.y - 4, player.x-2, player.y + 4)
+			upMove = 1
+
+			--print("moving left & hit rectangle:", player.x - 7, player.y - 4, player.x-2, player.y + 4)
 		else
-			print("conditional:", Stage.collidesRectangle(player.x + 2, player.y - 4 + 1, player.x+7, player.y + 4) == not Stage.collidesRectangle(player.x - 7, player.y - 4 + 1 , player.x-2, player.y + 4))
-			if Stage.collidesRectangle(player.x + 2, player.y - 4 + 1, player.x+7, player.y + 4) == not Stage.collidesRectangle(player.x - 7, player.y - 4 + 1 , player.x-2, player.y + 4) then
+				if player:collidesMap(player.x+2, player.y ) then
 				upMove = 1
-				print("jumping")
-			end
+				end
 		end
+
 		player:set("moveLeft", lMove)
 		player:set("moveRight", rMove)
-		--player:set("moveUp", upMove)
+		player:set("moveUp", upMove)
 		print("Moves:", lMove, " ", rMove, " ", upMove)
 	end
 end)
@@ -55,13 +59,13 @@ registercallback("onStageEntry", function()
 	local heroCoord = hero:findNearest(16,16)
 	local heroX = heroCoord.x
 	local heroY = heroCoord.y
-		
+
 	--Find the instance of the teleporter based off player coordinates
 	local teleporter = Object.find("Teleporter", "vanilla")
 	local teleLocation = teleporter:findNearest(heroX,heroY)
 	local teleX = teleLocation.x
 	local teleY = teleLocation.y
-	
+
 	-- Just checking to see if it all worked
 	print(teleX)
 	print(teleY)
